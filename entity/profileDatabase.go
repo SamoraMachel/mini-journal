@@ -1,10 +1,5 @@
 package entity
 
-import "errors"
-
-var (
-	ErrNotFound = errors.New("could not find the specified profile")
-)
 
 type ProfileDatabase map[string]Profile
 
@@ -19,7 +14,7 @@ func (p ProfileDatabase) DeleteProfile(hashKey string) {
 func (p ProfileDatabase) SearchProfile(hashKey string) (Profile, error) {
 	profile, ok := p[hashKey]
 	if !ok {
-		return Profile{}, ErrNotFound 
+		return Profile{}, ErrProfileNotFound 
 	}
 	return profile, nil
 }

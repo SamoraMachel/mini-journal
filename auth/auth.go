@@ -6,6 +6,7 @@ import (
 
 
 var profileDtb = make(entity.ProfileDatabase)
+var userNameList = entity.UserNameList{}
 
 func generateKey(username, password string) string {
 	return username + "#%$" + password
@@ -29,7 +30,14 @@ func Register(username, password, firstName, lastName string) error {
 		return entity.ErrDoubleRegistration
 	}
 
+	isUserNameValid := userNameList.IsValidUserName(username)
+	
+	if !isUserNameValid {
+		return entity.ErrUserNameTaken
+	}
+
 	profileDtb.AddProfile(hashKey, entity.Profile{FirstName: firstName, LastName: lastName})
+	userNameList = append(userNameList, username)
 	return nil
 }
 

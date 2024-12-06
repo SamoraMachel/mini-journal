@@ -1,7 +1,17 @@
 package entity
 
+
 type UserNameList []string
 
-func (u *UserNameList) isValidUserName(username string) bool {
-	return false
+type IUserName interface {
+	IsValidUserName(username string) bool
+}
+
+func (u UserNameList) IsValidUserName(username string) bool {
+	for _, userNm := range u {
+		if userNm == username {
+			return false
+		}
+	}
+	return true
 }
