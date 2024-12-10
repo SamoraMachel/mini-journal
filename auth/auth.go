@@ -8,12 +8,12 @@ import (
 var profileDtb = make(entity.ProfileDatabase)
 var userNameList = entity.UserNameList{}
 
-func generateKey(username, password string) string {
+func GenerateKey(username, password string) string {
 	return username + "#%$" + password
 }
 
 func Login(username, password string) (entity.Profile, error) {
-	hashKey := generateKey(username, password)
+	hashKey := GenerateKey(username, password)
 	profile, err := profileDtb.SearchProfile(hashKey)
 	if err != nil {
 		return entity.Profile{}, entity.ErrWrongCredentials
@@ -23,7 +23,7 @@ func Login(username, password string) (entity.Profile, error) {
 }
 
 func Register(username, password, firstName, lastName string) error {
-	hashKey := generateKey(username, password)
+	hashKey := GenerateKey(username, password)
 	_, err := profileDtb.SearchProfile(hashKey)
 
 	if err == nil {	
@@ -42,7 +42,7 @@ func Register(username, password, firstName, lastName string) error {
 }
 
 func DeleteAccount(username, password string) error {
-	hashKey := generateKey(username, password)
+	hashKey := GenerateKey(username, password)
 	_, err := profileDtb.SearchProfile(hashKey)
 
 	if err != nil {
